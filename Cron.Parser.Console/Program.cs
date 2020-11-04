@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Cron.Parser.Console
 {
@@ -7,18 +8,20 @@ namespace Cron.Parser.Console
     {
         private static void Main(string[] args)
         {
-            var argument = args[0];
-            var cronExpressionParser = new CronExpressionParser(argument, new ConsoleTextWriter());
+            var textWriter = new ConsoleTextWriter();
+            var argument = args.FirstOrDefault();
+            var cronExpressionParser = new CronExpressionParser(argument, textWriter);
             cronExpressionParser.PrintExpression();
-            System.Console.ReadLine();
         }
-        
+
         private class ConsoleTextWriter : ITextWriter
         {
             public void WriteLine(string content)
             {
                 System.Console.WriteLine(content);
             }
+
+            public void ReadLine() => System.Console.ReadLine();
         }
     }
 }

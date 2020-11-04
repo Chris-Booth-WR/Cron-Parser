@@ -11,35 +11,28 @@ namespace Cron.Parser.Console
         public CronExpressionParser(string cronExpression, ITextWriter writer)
         {
             _writer = writer;
-            _parts = cronExpression.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            _parts = cronExpression?.Split(' ', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
         }
 
         public void PrintExpression()
         {
+            if (_parts.Length == 0)
+            {
+                _writer.WriteLine("Invalid arguments supplied");
+                _writer.ReadLine();
+                return;
+            }
             for (var i = 0; i < _parts.Length; i++)
             {
-                IDigitType digitType;
-                switch (i)
+                IDigitType digitType = i switch
                 {
-                    case 0:
-                        digitType = new MinuteType();
-                        break;
-                    case 1:
-                        digitType = new HourType();
-                        break;
-                    case 2:
-                        digitType = new DayMonthType();
-                        break;
-                    case 3:
-                        digitType = new MonthType();
-                        break;
-                    case 4:
-                        digitType = new DayWeekType();
-                        break;
-                    default:
-                        digitType = default;
-                        break;
-                }
+                    0 => new MinuteType(),
+                    1 => new HourType(),
+                    2 => new DayMonthType(),
+                    3 => new MonthType(),
+                    4 => new DayWeekType(),
+                    _ => default
+                };
 
                 if (digitType == default)
                 {
@@ -50,8 +43,9 @@ namespace Cron.Parser.Console
                 var cronExpressionVisitor = new CronExpressionVisitor(_parts[i], digitType);
                 if (cronExpressionVisitor.Validate())
                 {
-                   _writer.WriteLine(cronExpressionVisitor.Print());
+                    _writer.WriteLine(cronExpressionVisitor.Print());
                 }
+                _writer.ReadLine();
             }
         }
     }

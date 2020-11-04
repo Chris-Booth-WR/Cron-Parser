@@ -45,6 +45,10 @@ namespace Cron.Parser.Tests
                 _builder.AppendLine(content);
             }
 
+            public void ReadLine()
+            {
+            }
+
             public string GetContent()
             {
                 return _builder.ToString();

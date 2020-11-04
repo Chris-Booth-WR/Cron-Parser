@@ -37,38 +37,44 @@ namespace Cron.Parser.Console
                     break;
                 default:
 
-                    if (!part.Contains(CronAllowedCharacters.Comma)
-                        && !part.Contains(CronAllowedCharacters.Dash)
-                        && !part.Contains(CronAllowedCharacters.Slash))
-                    {
-                        _valid = false;
-                        break;
-                    }
-
-                    string[] parts;
-                    if (part.Contains(CronAllowedCharacters.Comma))
-                    {
-                        parts = part.Split(CronAllowedCharacters.Comma, StringSplitOptions.RemoveEmptyEntries);
-                        _valid = parts.Length != 1 && parts.All(Validate);
-                        break;
-                    }
-
-                    if (part.Contains(CronAllowedCharacters.Slash))
-                    {
-                        parts = part.Split(CronAllowedCharacters.Slash, StringSplitOptions.RemoveEmptyEntries);
-                        _valid = parts.Length == 2 && Validate(parts[0]) && !parts[1].Contains(CronAllowedCharacters.Dash) && Validate(parts[1]);
-
-                        break;
-                    }
-
-                    if (!part.Contains(CronAllowedCharacters.Dash)) return false;
-
-                    parts = part.Split(CronAllowedCharacters.Dash, StringSplitOptions.RemoveEmptyEntries);
-                    _valid = parts.Length == 2 && parts.All(Validate);
+                    if (!ValidateMultipartCron(part)) _valid = false;
                     break;
             }
 
             return _valid.GetValueOrDefault();
+        }
+
+        private bool ValidateMultipartCron(string part)
+        {
+            if (!part.Contains(CronAllowedCharacters.Comma)
+                && !part.Contains(CronAllowedCharacters.Dash)
+                && !part.Contains(CronAllowedCharacters.Slash))
+            {
+                _valid = false;
+                return true;
+            }
+
+            string[] parts;
+            if (part.Contains(CronAllowedCharacters.Comma))
+            {
+                parts = part.Split(CronAllowedCharacters.Comma, StringSplitOptions.RemoveEmptyEntries);
+                _valid = parts.Length != 1 && parts.All(Validate);
+                return true;
+            }
+
+            if (part.Contains(CronAllowedCharacters.Slash))
+            {
+                parts = part.Split(CronAllowedCharacters.Slash, StringSplitOptions.RemoveEmptyEntries);
+                _valid = parts.Length == 2 && Validate(parts[0]) && !parts[1].Contains(CronAllowedCharacters.Dash) && Validate(parts[1]);
+
+                return true;
+            }
+
+            if (!part.Contains(CronAllowedCharacters.Dash)) return false;
+
+            parts = part.Split(CronAllowedCharacters.Dash, StringSplitOptions.RemoveEmptyEntries);
+            _valid = parts.Length == 2 && parts.All(Validate);
+            return true;
         }
 
         public string Print()
