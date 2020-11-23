@@ -31,6 +31,7 @@ namespace Cron.Parser.Console
                     2 => new DayMonthType(),
                     3 => new MonthType(),
                     4 => new DayWeekType(),
+                    5 => new YearType(),
                     _ => default
                 };
 

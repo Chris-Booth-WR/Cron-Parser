@@ -19,6 +19,12 @@ namespace Cron.Parser.Tests
         [InlineData("10/15 * * * *")]
         [InlineData("10-20/15 * * * *")]
         [InlineData("*/15 0 1,15 * 1-5")]
+        [InlineData("* 4 * * Sun")]
+        [InlineData("* 4 * * Sun,Mon,Wed")]
+        [InlineData("* 4 * * Sun-Wed")]
+        [InlineData("* 4 * * Sun,Mon,Wed 2020")]
+        [InlineData("* 4 * * Sun,Mon,Wed 2020,2021")]
+        [InlineData("* 4 * * Sun,Mon,Wed 2020-2025")]
         [Theory]
         public void TestValidCrons(string content)
         {

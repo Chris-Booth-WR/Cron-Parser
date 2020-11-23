@@ -22,6 +22,7 @@
           <e p="IDigitType.cs" t="Include" />
           <e p="MinuteType.cs" t="Include" />
           <e p="MonthType.cs" t="Include" />
+          <e p="YearType.cs" t="Include" />
         </e>
         <e p="ITextWriter.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
@@ -50,11 +51,7 @@
       </e>
       <e p="packages" t="ExcludeRecursive" />
     </e>
-    <e p="$APPLICATION_CONFIG_DIR$/consoles/db" t="IncludeRecursive" />
-    <e p="$APPLICATION_CONFIG_DIR$/consoles/ide" t="IncludeRecursive" />
-    <e p="$APPLICATION_CONFIG_DIR$/extensions" t="IncludeRecursive" />
-    <e p="$APPLICATION_CONFIG_DIR$/scratches" t="IncludeRecursive" />
     <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_Cron.Parser.-37557543.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_Cron.Parser.-667840670.00" t="ExcludeRecursive" />
   </component>
 </project>

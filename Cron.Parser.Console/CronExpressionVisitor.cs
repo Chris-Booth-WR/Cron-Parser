@@ -29,14 +29,25 @@ namespace Cron.Parser.Console
                 case 2:
                     if (!int.TryParse(part, out var value))
                     {
-                        _valid = string.Equals(part, CronAllowedCharacters.Star.ToString(), StringComparison.InvariantCultureIgnoreCase);
+                        _valid = string.Equals(part, CronAllowedCharacters.Star.ToString(),
+                            StringComparison.InvariantCultureIgnoreCase);
                         break;
                     }
 
                     _valid = value >= _digitType.MinValue && value <= _digitType.MaxValue;
                     break;
                 default:
-
+                    if (_digitType is DayWeekType dayOfTheWeek && dayOfTheWeek.ValidDays.Keys.Contains(part))
+                    {
+                        _valid = true;
+                        break;
+                    }
+                    else if (_digitType is YearType && int.TryParse(part, out _))
+                    {
+                        _valid = true;
+                        break;
+                    }
+                    
                     if (!ValidateMultipartCron(part)) _valid = false;
                     break;
             }
